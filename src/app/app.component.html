@@ -1,0 +1,35 @@
+<div class="dashboard">
+  <mat-toolbar
+    class="navbar-color mat-elevation-z8"
+    style="padding: 0px; z-index: 2"
+  >
+    <button mat-button (click)="drawer.toggle()">
+      <mat-icon>menu</mat-icon>
+    </button>
+  </mat-toolbar>
+
+  <mat-drawer-container fxFlex autosize class="background">
+    <mat-drawer #drawer>
+      <div fxLayout="column">
+        @for (item of sidebarMenus; track $index) {
+        <button
+          mat-button
+          [routerLink]="item.link"
+          routerLinkActive="selected no-border txt-bold bold"
+          (click)="drawer.toggle()"
+        >
+          <mat-icon class="mr-2">{{ item.icon }}</mat-icon
+          >{{ item.name }}
+        </button>
+        <mat-divider></mat-divider>
+        }
+      </div>
+    </mat-drawer>
+
+    <mat-drawer-content>
+      <div style="display: inline">
+        <router-outlet />
+      </div>
+    </mat-drawer-content>
+  </mat-drawer-container>
+</div>

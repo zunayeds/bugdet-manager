@@ -1,0 +1,8 @@
+<dialog-base [title]="(data.id ? 'Edit' : 'Add') + ' Account'">
+  <form [formGroup]="form">
+    <mat-form-field>
+      <mat-label>Name</mat-label>
+      <input matInput formControlName="name" />
+    </mat-form-field>
+  </form>
+</dialog-base>

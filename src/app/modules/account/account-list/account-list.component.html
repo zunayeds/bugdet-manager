@@ -1,0 +1,11 @@
+<mat-card>
+  <mat-card-header>
+    <mat-card-title>Manage Accounts</mat-card-title>
+  </mat-card-header>
+  <mat-card-actions>
+    <button mat-button color="primary" (click)="addAccount()">
+      Add Account
+    </button>
+  </mat-card-actions>
+  <data-table [config]="config" [provider]="dataProvider"> </data-table>
+</mat-card>
