@@ -10,14 +10,21 @@ import { FormBuilder, FormGroup } from '@angular/forms';
 })
 export class AddEditAccountComponent {
   form: FormGroup;
+  clonedData: Account;
 
   constructor(
     public dialogRef: MatDialogRef<AddEditAccountComponent>,
     @Inject(MAT_DIALOG_DATA) public data: Account,
     private formBuilder: FormBuilder
   ) {
+    this.clonedData = { ...data };
     this.form = this.formBuilder.group({
-      name: [data.name],
+      name: [this.clonedData.name],
     });
+  }
+
+  handleSave() {
+    if (this.form.invalid) return;
+    this.dialogRef.close(this.clonedData);
   }
 }

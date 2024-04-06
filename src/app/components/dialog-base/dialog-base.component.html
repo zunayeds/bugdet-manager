@@ -2,7 +2,7 @@
 <mat-dialog-content>
   <ng-content></ng-content>
 </mat-dialog-content>
-<mat-dialog-actions>
-  <button mat-button color="primary">Save</button>
-  <button mat-button color="secondary" cdkFocusInitial>Cancel</button>
+<mat-dialog-actions align="end">
+  <button mat-button color="primary" (click)="saveData()">Save</button>
+  <button mat-button color="secondary" mat-dialog-close>Cancel</button>
 </mat-dialog-actions>

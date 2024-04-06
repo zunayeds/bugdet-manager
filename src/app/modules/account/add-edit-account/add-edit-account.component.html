@@ -1,4 +1,7 @@
-<dialog-base [title]="(data.id ? 'Edit' : 'Add') + ' Account'">
+<dialog-base
+  [title]="(data.id ? 'Edit' : 'Add') + ' Account'"
+  (dataSaved)="handleSave()"
+>
   <form [formGroup]="form">
     <mat-form-field>
       <mat-label>Name</mat-label>

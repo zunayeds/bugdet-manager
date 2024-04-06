@@ -27,7 +27,7 @@ export class AccountListComponent {
   dataProvider: DataProvider = {
     skip: 0,
     take: 10,
-    execute<T>() {
+    getData<T>() {
       const accounts: Account[] = [
         {
           id: 1,
@@ -55,6 +55,9 @@ export class AccountListComponent {
         },
       ];
       return of(accounts) as Observable<T[]>;
+    },
+    editData<T>(id: number, data: T) {
+      return of(data);
     },
   };
 

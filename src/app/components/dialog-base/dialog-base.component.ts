@@ -1,4 +1,4 @@
-import { Component, Input } from '@angular/core';
+import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { MatButtonModule } from '@angular/material/button';
 import {
@@ -31,4 +31,11 @@ import { MatInputModule } from '@angular/material/input';
 export class DialogBaseComponent {
   @Input()
   title!: string;
+
+  @Output()
+  dataSaved: EventEmitter<void> = new EventEmitter();
+
+  saveData() {
+    this.dataSaved.emit();
+  }
 }

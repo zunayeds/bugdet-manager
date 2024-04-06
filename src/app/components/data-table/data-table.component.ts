@@ -1,12 +1,13 @@
-import { Component, computed, input, Signal } from '@angular/core';
+import { Component, computed, input, signal, Signal } from '@angular/core';
 import { DataTableConfig } from '../../models/data-table-config';
 import { DataProvider } from '../../models/data-provider';
 import { MatTableModule } from '@angular/material/table';
-import { Observable } from 'rxjs';
+import { Observable, of } from 'rxjs';
 import { CommonModule } from '@angular/common';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 import { MatDialog } from '@angular/material/dialog';
+import { count } from 'console';
 
 @Component({
   selector: 'data-table',
@@ -32,17 +33,30 @@ export class DataTableComponent {
     () => !!this.config().canEdit || !!this.config().canDelete
   );
 
-  data: Signal<Observable<any[]>> = computed(() => this.provider().execute());
+  data: Signal<Observable<any[]>> = computed(() =>
+    this.refreshCounter() > -1 ? this.provider().getData() : of([])
+  );
+
+  refreshCounter = signal(0);
 
   constructor(private dialog: MatDialog) {}
 
   edit(element: any): void {
     const dialogRef = this.dialog.open(this.config().editComponent, {
       data: element,
+      closeOnNavigation: false,
+      disableClose: true,
     });
 
     dialogRef.afterClosed().subscribe((result) => {
-      console.log('The dialog was closed');
+      if (result && this.provider()) {
+        const provider = this.provider();
+        if (provider && provider.editData) {
+          provider.editData(element.id, result).subscribe((updatedElement) => {
+            this.refreshCounter.update((count) => count + 1);
+          });
+        }
+      }
     });
   }
 }
