@@ -75,7 +75,6 @@ export class DataAccessService implements DataAccessBaseService {
   private handleResult(res: PostgrestSingleResponse<any[]>) {
     if (!res.data && res.error) {
       this.messageService.add({
-        key: 'toast',
         severity: 'error',
         summary: 'Error',
         detail: res.error.details || res.error.message || 'An error occurred',
