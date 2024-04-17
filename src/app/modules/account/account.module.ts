@@ -4,12 +4,18 @@ import { AccountListComponent } from './account-list/account-list.component';
 import { AddEditAccountComponent } from './add-edit-account/add-edit-account.component';
 import { RouterModule, Routes } from '@angular/router';
 import { DataTableComponent } from '../../components/data-table/data-table.component';
-import { MatButtonModule } from '@angular/material/button';
-import { MatFormFieldModule } from '@angular/material/form-field';
 import { DialogBaseComponent } from '../../components/dialog-base/dialog-base.component';
-import { MatInputModule } from '@angular/material/input';
 import { ReactiveFormsModule } from '@angular/forms';
-import { MatCardModule } from '@angular/material/card';
+import { DialogModule } from 'primeng/dialog';
+import { ButtonModule } from 'primeng/button';
+import { DialogService } from 'primeng/dynamicdialog';
+import { InputTextModule } from 'primeng/inputtext';
+import { CardModule } from 'primeng/card';
+import { DataAccessBaseService } from '../../services/data-access-base.service';
+import { DataAccessService } from '../../services/data-access.service';
+import { AccountService } from '../../services/account.service';
+import { MessageService } from 'primeng/api';
+import { ToastModule } from 'primeng/toast';
 
 const routes: Routes = [
   {
@@ -25,12 +31,21 @@ const routes: Routes = [
     RouterModule.forChild(routes),
     DataTableComponent,
     ReactiveFormsModule,
-    MatCardModule,
-    MatFormFieldModule,
-    MatInputModule,
-    MatButtonModule,
-    MatFormFieldModule,
     DialogBaseComponent,
+    InputTextModule,
+    CardModule,
+    ButtonModule,
+    DialogModule,
+    ToastModule,
+  ],
+  providers: [
+    DialogService,
+    AccountService,
+    {
+      provide: DataAccessBaseService,
+      useClass: DataAccessService,
+    },
+    MessageService,
   ],
 })
 export class AccountModule {}

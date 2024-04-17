@@ -1,36 +1,70 @@
-<div class="mat-elevation-z8">
-  <table mat-table [dataSource]="data()">
-    @for (column of config().columns; track $index) {
-    <ng-container [matColumnDef]="column.name">
-      <th mat-header-cell *matHeaderCellDef>{{ column.label }}</th>
-      <td mat-cell *matCellDef="let element">{{ element.name }}</td>
-    </ng-container>
+<p-toast></p-toast>
 
-    } @if(actionButtonEnabled()) {
-    <ng-container matColumnDef="actions">
-      <th mat-header-cell *matHeaderCellDef>Actions</th>
-      <td mat-cell *matCellDef="let element">
+<p-toolbar>
+  <ng-template pTemplate="start">
+    <h3>{{ title() }}</h3>
+  </ng-template>
+
+  <ng-template pTemplate="end">
+    @if (config().canAdd) {
+    <p-button
+      class="add-button"
+      [label]="'Add ' + config().type"
+      icon="pi pi-plus"
+      (onClick)="add()"
+    ></p-button>
+    }
+  </ng-template>
+</p-toolbar>
+
+<p-table
+  [columns]="config().columns"
+  [value]="data()"
+  [paginator]="true"
+  [paginatorDropdownAppendTo]="'body'"
+  [rows]="rows()"
+  [first]="skipped()"
+  [totalRecords]="totalRecords()"
+  [lazy]="true"
+  [rowsPerPageOptions]="[10, 20, 30]"
+  [showCurrentPageReport]="true"
+  currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries"
+  (onPage)="handlePageChange($event)"
+>
+  <ng-template pTemplate="header" let-columns>
+    <tr>
+      <th *ngFor="let col of config().columns">
+        {{ col.label }}
+      </th>
+      @if(actionButtonEnabled()) {
+      <th width="120em">Actions</th>
+      }
+    </tr>
+  </ng-template>
+  <ng-template pTemplate="body" let-rowData let-columns="columns">
+    <tr>
+      <td *ngFor="let col of columns">
+        {{ rowData[col.name] }}
+      </td>
+      <td class="action-column">
         @if (config().canEdit) {
-        <button mat-icon-button color="primary" (click)="edit(element)">
-          <mat-icon>edit</mat-icon>
-        </button>
+        <p-button
+          icon="pi pi-file-edit"
+          [rounded]="true"
+          [text]="true"
+          [disabled]="rowData['isDefault']"
+          (onClick)="edit(rowData)"
+        ></p-button>
         } @if (config().canDelete) {
-        <button mat-icon-button color="warn">
-          <mat-icon>delete</mat-icon>
-        </button>
+        <p-button
+          icon="pi pi-trash"
+          [rounded]="true"
+          [text]="true"
+          [disabled]="rowData['isDefault']"
+          severity="danger"
+        ></p-button>
         }
       </td>
-    </ng-container>
-    }
-
-    <tr mat-header-row *matHeaderRowDef="displayedColumns()"></tr>
-    <tr mat-row *matRowDef="let row; columns: displayedColumns()"></tr>
-  </table>
-
-  <!-- <mat-paginator
-    [pageSizeOptions]="[5, 10, 20]"
-    showFirstLastButtons
-    aria-label="Select page of periodic elements"
-  >
-  </mat-paginator> -->
-</div>
+    </tr>
+  </ng-template>
+</p-table>

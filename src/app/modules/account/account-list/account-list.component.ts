@@ -1,10 +1,13 @@
 import { Component } from '@angular/core';
 import { DataTableConfig } from '../../../models/data-table-config';
 import { DataProvider } from '../../../models/data-provider';
-import { Observable, of } from 'rxjs';
-import { Account } from '../../../models/account';
+import { Observable } from 'rxjs';
 import { AddEditAccountComponent } from '../add-edit-account/add-edit-account.component';
-import { MatDialog } from '@angular/material/dialog';
+import { DialogService } from 'primeng/dynamicdialog';
+import { DefaultDialogConfig } from '../../../constants/default-dialog.config';
+import { AccountService } from '../../../services/account.service';
+import { Account } from '../../../models/account';
+import { RetrievedData } from '../../../models/retrieved-data';
 
 @Component({
   selector: 'account-list',
@@ -13,66 +16,48 @@ import { MatDialog } from '@angular/material/dialog';
 })
 export class AccountListComponent {
   config: DataTableConfig = {
+    type: 'Account',
     columns: [
       {
         name: 'name',
         label: 'Name',
       },
     ],
+    canAdd: true,
     canEdit: true,
-    editComponent: AddEditAccountComponent,
+    addEditComponent: AddEditAccountComponent,
     canDelete: true,
   };
 
-  dataProvider: DataProvider = {
-    skip: 0,
-    take: 10,
-    getData<T>() {
-      const accounts: Account[] = [
-        {
-          id: 1,
-          name: 'Cash',
-        },
-        {
-          id: 2,
-          name: 'City Debit Card',
-        },
-        {
-          id: 3,
-          name: 'SCB Debit Card',
-        },
-        {
-          id: 4,
-          name: 'SCB Credit Card',
-        },
-        {
-          id: 5,
-          name: 'BKash',
-        },
-        {
-          id: 6,
-          name: 'Savings',
-        },
-      ];
-      return of(accounts) as Observable<T[]>;
-    },
-    editData<T>(id: number, data: T) {
-      return of(data);
-    },
-  };
+  dataProvider: DataProvider = {} as DataProvider;
 
-  constructor(private dialog: MatDialog) {}
+  constructor(
+    private dialogService: DialogService,
+    private accountService: AccountService
+  ) {
+    this.dataProvider = {
+      getData<T>(skip?: number, take?: number): Observable<RetrievedData<T>> {
+        return accountService.getAccounts(
+          skip as number,
+          take as number
+        ) as Observable<RetrievedData<T>>;
+      },
+      addData(data): Observable<any> {
+        return accountService.addAccount(data as Account);
+      },
+      editData(data): Observable<any> {
+        return accountService.updateAccount(data as Account);
+      },
+    };
+  }
 
   addAccount() {
-    const dialogRef = this.dialog.open(AddEditAccountComponent, {
+    this.dialogService.open(AddEditAccountComponent, {
+      ...DefaultDialogConfig,
       data: {
         id: null,
         name: '',
       },
-    });
-
-    dialogRef.afterClosed().subscribe((result) => {
-      console.log('The dialog was closed');
     });
   }
 }

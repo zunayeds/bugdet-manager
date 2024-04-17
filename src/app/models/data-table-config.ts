@@ -1,9 +1,10 @@
 export interface DataTableConfig {
+  type: string;
   columns: Array<DataTableColumn>;
+  canAdd?: boolean;
   canEdit?: boolean;
-  editComponent?: any;
   canDelete?: boolean;
-  deleteComponent?: any;
+  addEditComponent?: any;
 }
 
 export interface DataTableColumn {

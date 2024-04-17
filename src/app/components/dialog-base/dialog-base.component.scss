@@ -1,0 +1,16 @@
+::ng-deep .p-dialog .p-dialog-header {
+  padding: 1.4rem 0rem;
+}
+
+::ng-deep .p-dialog .p-dialog-content:last-of-type {
+  border-top-right-radius: 6px;
+  border-top-left-radius: 6px;
+}
+
+::ng-deep .p-dialog .p-dialog-footer {
+  padding: 1.4rem 0rem 0rem 0rem;
+}
+
+::ng-deep .p-dialog .p-dialog-footer button {
+  margin: 0;
+}

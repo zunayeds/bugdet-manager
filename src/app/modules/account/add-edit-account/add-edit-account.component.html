@@ -1,11 +1,11 @@
 <dialog-base
-  [title]="(data.id ? 'Edit' : 'Add') + ' Account'"
-  (dataSaved)="handleSave()"
+  [title]="(clonedData.id ? 'Edit' : 'Add') + ' Account'"
+  (changesSaved)="handleSave()"
 >
   <form [formGroup]="form">
-    <mat-form-field>
-      <mat-label>Name</mat-label>
-      <input matInput formControlName="name" />
-    </mat-form-field>
+    <div class="flex flex-column gap-2">
+      <label for="name">Name</label>
+      <input pInputText id="name" formControlName="name" />
+    </div>
   </form>
 </dialog-base>

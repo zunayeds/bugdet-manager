@@ -1,8 +1,25 @@
-<h2 mat-dialog-title>{{ title }}</h2>
-<mat-dialog-content>
-  <ng-content></ng-content>
-</mat-dialog-content>
-<mat-dialog-actions align="end">
-  <button mat-button color="primary" (click)="saveData()">Save</button>
-  <button mat-button color="secondary" mat-dialog-close>Cancel</button>
-</mat-dialog-actions>
+<div class="p-dialog-header">
+  <span class="p-dialog-title">{{ title() }}</span>
+</div>
+<ng-content class="p-dialog-content"></ng-content>
+<div class="p-dialog-footer">
+  <footer>
+    <div class="flex w-full justify-content-end">
+      <p-button
+        [icon]="switchToYesNoButtons() ? 'pi pi-check' : 'pi pi-save'"
+        [label]="switchToYesNoButtons() ? 'Yes' : 'Save'"
+        size="small"
+        pAutoFocus
+        [autofocus]="true"
+        (click)="handleSave()"
+      ></p-button>
+      <p-button
+        icon="pi pi-times"
+        [label]="switchToYesNoButtons() ? 'No' : 'Close'"
+        size="small"
+        severity="danger"
+        (click)="handleClose()"
+      ></p-button>
+    </div>
+  </footer>
+</div>

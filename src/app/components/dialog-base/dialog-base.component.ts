@@ -1,41 +1,29 @@
-import { Component, EventEmitter, Input, Output } from '@angular/core';
+import { Component, EventEmitter, Output, input } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { MatButtonModule } from '@angular/material/button';
-import {
-  MatDialogActions,
-  MatDialogClose,
-  MatDialogContent,
-  MatDialogTitle,
-} from '@angular/material/dialog';
-import { FormsModule } from '@angular/forms';
-import { MatFormFieldModule } from '@angular/material/form-field';
-import { MatInputModule } from '@angular/material/input';
+import { DialogModule } from 'primeng/dialog';
+import { ButtonModule } from 'primeng/button';
+import { DialogService, DynamicDialogRef } from 'primeng/dynamicdialog';
 
 @Component({
   selector: 'dialog-base',
   standalone: true,
-  imports: [
-    CommonModule,
-    MatButtonModule,
-    MatFormFieldModule,
-    MatInputModule,
-    FormsModule,
-    MatDialogTitle,
-    MatDialogContent,
-    MatDialogActions,
-    MatDialogClose,
-  ],
+  imports: [CommonModule, ButtonModule, DialogModule],
+  providers: [DialogService],
   templateUrl: './dialog-base.component.html',
   styleUrl: './dialog-base.component.scss',
 })
 export class DialogBaseComponent {
-  @Input()
-  title!: string;
+  title = input.required<string>();
+  switchToYesNoButtons = input<boolean>();
+  @Output() changesSaved = new EventEmitter();
 
-  @Output()
-  dataSaved: EventEmitter<void> = new EventEmitter();
+  constructor(public ref: DynamicDialogRef) {}
 
-  saveData() {
-    this.dataSaved.emit();
+  handleSave() {
+    this.changesSaved.emit();
+  }
+
+  handleClose() {
+    this.ref.close();
   }
 }
