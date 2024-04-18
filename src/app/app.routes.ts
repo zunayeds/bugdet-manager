@@ -14,6 +14,13 @@ export const routes: Routes = [
       import('./modules/account/account.module').then((m) => m.AccountModule),
   },
   {
+    path: 'category',
+    loadChildren: () =>
+      import('./modules/category/category.module').then(
+        (m) => m.CategoryModule
+      ),
+  },
+  {
     path: '**',
     redirectTo: 'dashboard',
   },

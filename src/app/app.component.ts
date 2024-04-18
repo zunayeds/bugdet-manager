@@ -12,7 +12,11 @@ export class AppComponent {
   sidebarMenus = [
     { name: 'Dashboard', icon: 'pi-th-large', link: '/dashboard' },
     { name: 'Set Budget', icon: 'pi-dollar', link: '/budget' },
-    { name: 'Manage Catergories', icon: 'pi-objects-column', link: '/manage' },
+    {
+      name: 'Manage Catergories',
+      icon: 'pi-objects-column',
+      link: '/category',
+    },
     {
       name: 'Manage Accounts',
       icon: 'pi-wallet',
