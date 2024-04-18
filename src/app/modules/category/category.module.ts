@@ -11,7 +11,6 @@ import { InputTextModule } from 'primeng/inputtext';
 import { CardModule } from 'primeng/card';
 import { DataAccessBaseService } from '../../services/data-access-base.service';
 import { DataAccessService } from '../../services/data-access.service';
-import { AccountService } from '../../services/account.service';
 import { MessageService } from 'primeng/api';
 import { ToastModule } from 'primeng/toast';
 import { TabViewModule } from 'primeng/tabview';
@@ -19,6 +18,7 @@ import { CategoryListComponent } from './category-list/category-list.component';
 import { AddEditCategoryComponent } from './add-edit-category/add-edit-category.component';
 import { CategorySelectorComponent } from './category-selector/category-selector.component';
 import { CategoryService } from '../../services/category.service';
+import { DataTreeComponent } from '../../components/data-tree/data-tree.component';
 
 const routes: Routes = [
   {
@@ -45,6 +45,7 @@ const routes: Routes = [
     DialogModule,
     ToastModule,
     TabViewModule,
+    DataTreeComponent
   ],
   providers: [
     DialogService,

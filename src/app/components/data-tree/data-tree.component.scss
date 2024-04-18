@@ -1,0 +1,11 @@
+.action-column {
+  padding: 0;
+}
+
+::ng-deep .p-toolbar {
+  padding: 0 0.75rem;
+}
+
+::ng-deep .p-paginator .p-paginator-current {
+  margin-left: auto;
+}
